@@ -39,8 +39,8 @@ print(pd.value_counts('Species'))
 # Remove rows for chemicals with less than 10 measurement values with the same measurement type and units.
 # Save as smaller csv files grouped by CAS and measurement type.
 
-#groups = df.groupby(['CAS', 'Measure'])
-#for group in groups:
-#    vals, df = group
-#    if df.shape[0] >= 10:
-        #df.to_csv('CAS_{}_{}.csv'.format(vals[0], vals[1]))
+groups = df.groupby(['CAS', 'Measure'])
+for group in groups:
+   vals, df = group
+   if df.shape[0] >= 10:
+        df.to_csv('CAS_{}_{}.csv'.format(vals[0], vals[1]))
