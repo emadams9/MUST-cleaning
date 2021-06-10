@@ -30,10 +30,85 @@ for index, row in df.iterrows():
         df.at[index, 'Value'] = row['Value'] / 1000     # Divide by 1000
         df.at[index, 'Unit'] = 'mg/kg'
 
-# Species stuff
-print(pd.value_counts('Species'))
+# Species stuff: rename some species types
 
-# Assigning KS values
+df = df.replace(['8rat', 'rat8'], 'rat')
+df = df.replace(['mammal (species unspecified8)', 'mammal '], 'mammal')
+
+# Determining sorts of species that occur in final groups using set.
+
+#set_species = set()
+#s_groups = df.groupby(['Species'])
+#for group in s_groups:
+#vals, df = group
+#set_species.add(vals)
+#print(set_species)
+
+# Assigning KS values based on species
+
+for index, row in df.iterrows():
+    if row['Species'] == 'mammal':
+        df.at[index, 'KS'] = 4
+    if row['Species'] == 'frog':
+        df.at[index, 'KS'] = 4
+
+for index, row in df.iterrows():
+    if row['Species'] == 'domestic animals - goat/sheep':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'quail':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'horse/donkey':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'bird - domestic':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'cattle':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'chicken':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'pigeon':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'duck':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'turkey':
+        df.at[index, 'KS'] = 3
+    if row['Species'] == 'bird - wild':
+        df.at[index, 'KS'] = 3
+
+for index, row in df.iterrows():
+    if row['Species'] == 'cat':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'guinea pig':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'pig':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'dog':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'squirrel':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'rat':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'gerbil':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'hamster':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'rabbit':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'mouse':
+        df.at[index, 'KS'] = 2
+    if row['Species'] == 'monkey':
+        df.at[index, 'KS'] = 2
+
+for index, row in df.iterrows():
+    if row['Species'] == 'human':
+        df.at[index, 'KS'] = 1
+    if row['Species'] == 'women':
+        df.at[index, 'KS'] = 1
+    if row['Species'] == 'man':
+        df.at[index, 'KS'] = 1
+    if row['Species'] == 'child':
+        df.at[index, 'KS'] = 1
+    if row['Species'] == 'infant':
+        df.at[index, 'KS'] = 1
 
 # Group by CAS ID number and measurement type.
 # Remove rows for chemicals with less than 10 measurement values with the same measurement type and units.
@@ -43,4 +118,5 @@ groups = df.groupby(['CAS', 'Measure'])
 for group in groups:
    vals, df = group
    if df.shape[0] >= 10:
-        df.to_csv('CAS_{}_{}.csv'.format(vals[0], vals[1]))
+        print(group)
+        #df.to_csv('CAS_{}_{}.csv'.format(vals[0], vals[1]), index=False)
