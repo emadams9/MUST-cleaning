@@ -44,7 +44,7 @@ df = df.replace(['mammal (species unspecified8)', 'mammal '], 'mammal')
 #set_species.add(vals)
 #print(set_species)
 
-# Assigning KS values based on species
+# Assigning KS values based on species relevance to humans
 
 for index, row in df.iterrows():
     if row['Species'] == 'mammal':
@@ -112,11 +112,36 @@ for index, row in df.iterrows():
 
 # Group by CAS ID number and measurement type.
 # Remove rows for chemicals with less than 10 measurement values with the same measurement type and units.
-# Save as smaller csv files grouped by CAS and measurement type.
+# Save as smaller csv files grouped by CAS and measurement type in folders based on number of threshold measurements
+# (10, 20, 30, 40, 72).
 
 groups = df.groupby(['CAS', 'Measure'])
 for group in groups:
    vals, df = group
    if df.shape[0] >= 10:
-        print(group)
-        #df.to_csv('CAS_{}_{}.csv'.format(vals[0], vals[1]), index=False)
+        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/ten/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+                  index=False)
+   if df.shape[0] >= 20:
+       df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/twenty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+                 index=False)
+   if df.shape[0] >= 30:
+       df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/thirty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+                 index=False)
+   if df.shape[0] >= 40:
+       df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/forty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+                 index=False)
+   if df.shape[0] >= 50:
+       df.to_csv(
+           '/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/fifty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+           index=False)
+   if df.shape[0] >= 60:
+       df.to_csv(
+           '/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/sixty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+           index=False)
+   if df.shape[0] >= 70:
+       df.to_csv(
+           '/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/seventy/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+           index=False)
+   if df.shape[0] >= 72:
+       df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/seventy_two/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+                 index=False)
