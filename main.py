@@ -1,4 +1,6 @@
 import pandas as pd
+import os
+import glob
 
 
 def toxicology_csv_to_list(some_csv):
@@ -122,6 +124,10 @@ for index, row in df.iterrows():
 # Remove rows for chemicals with less than 10 measurement values with the same measurement type and units.
 # Save as smaller csv files grouped by CAS number and measurement type in folders based on number of threshold measurements
 # (10 - 100).
+
+files = glob.glob('cleaned_csv_output/*.csv')
+for f in files:
+    os.remove(f)
 
 groups = df.groupby(['CAS', 'Measure'])
 for group in groups:
