@@ -6,7 +6,7 @@ def toxicology_csv_to_list(some_csv):
     return tox_data
 
 
-df = toxicology_csv_to_list('/home/emily/CodeLyfe/Research/MUST/batch_NLM.csv')
+df = toxicology_csv_to_list('/home/emily/CodeLyfe/Research/MUST_original_and_perl/batch_NLM.csv')
 
 # Regroup acute toxicity measurements
 
@@ -120,36 +120,42 @@ for index, row in df.iterrows():
 
 # Group by CAS ID number and measurement type.
 # Remove rows for chemicals with less than 10 measurement values with the same measurement type and units.
-# Save as smaller csv files grouped by CAS and measurement type in folders based on number of threshold measurements
-# (10, 20, 30, 40, 72).
+# Save as smaller csv files grouped by CAS number and measurement type in folders based on number of threshold measurements
+# (10 - 100).
 
 groups = df.groupby(['CAS', 'Measure'])
 for group in groups:
     vals, df = group
-    df = df.rename(columns={'Source': 'X'})
-    df = df.assign(X='X')
-    df = df[['Measure', 'Value', 'KS', 'X']]
+    #df = df.rename(columns={'Source': 'X'})
+    #df = df.assign(X='X')
+    df = df[['CAS', 'Species', 'Measure', 'Value', 'Unit', 'KS', 'Source']]
     if df.shape[0] >= 10:
-        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/ten/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+        df.to_csv('cleaned_csv_output/{}_{}_10.csv'.format(vals[0], vals[1]),
                   header=False, index=False)
     if df.shape[0] >= 20:
-        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/twenty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+        df.to_csv('cleaned_csv_output/{}_{}_20.csv'.format(vals[0], vals[1]),
                   header= False, index=False)
     if df.shape[0] >= 30:
-        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/thirty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+        df.to_csv('cleaned_csv_output/{}_{}_30.csv'.format(vals[0], vals[1]),
                   header=False, index=False)
     if df.shape[0] >= 40:
-        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/forty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+        df.to_csv('cleaned_csv_output/{}_{}_40.csv'.format(vals[0], vals[1]),
                   header=False, index=False)
     if df.shape[0] >= 50:
-        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/fifty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+        df.to_csv('cleaned_csv_output/{}_{}_50.csv'.format(vals[0], vals[1]),
                   header=False, index=False)
     if df.shape[0] >= 60:
-        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/sixty/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+        df.to_csv('cleaned_csv_output/{}_{}_60.csv'.format(vals[0], vals[1]),
                   header=False, index=False)
     if df.shape[0] >= 70:
-        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/seventy/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+        df.to_csv('cleaned_csv_output/{}_{}_70.csv'.format(vals[0], vals[1]),
                   header=False, index=False)
-    if df.shape[0] >= 72:
-        df.to_csv('/home/emily/CodeLyfe/Research/MUST/cleaned_csv_output/seventy_two/CAS_{}_{}.csv'.format(vals[0], vals[1]),
+    if df.shape[0] >= 80:
+        df.to_csv('cleaned_csv_output/{}_{}_80.csv'.format(vals[0], vals[1]),
+                  header=False, index=False)
+    if df.shape[0] >= 90:
+        df.to_csv('cleaned_csv_output/{}_{}_90.csv'.format(vals[0], vals[1]),
+                  header=False, index=False)
+    if df.shape[0] >= 100:
+        df.to_csv('cleaned_csv_output/{}_{}_100.csv'.format(vals[0], vals[1]),
                   header=False, index=False)
