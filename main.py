@@ -1,3 +1,6 @@
+# Written by Emily Adams, Summer 2021, Kostal Research Group at The George Washington University
+# Data cleaning tool to prepare csv data for MUST
+
 import pandas as pd
 import os
 import glob
@@ -61,15 +64,20 @@ for index, row in df.iterrows():
         df.at[index, 'KS'] = 4
     if row['Species'] == 'frog':
         df.at[index, 'KS'] = 4
+    if row['Species'] == 'domestic animals - goat/sheep':
+        df.at[index, 'KS'] = 4
+    if row['Species'] == 'horse/donkey':
+        df.at[index, 'KS'] = 4
+    if row['Species'] == 'bird - domestic':
+        df.at[index, 'KS'] = 4
+    if row['Species'] == 'bird - wild':
+        df.at[index, 'KS'] = 4
 
 for index, row in df.iterrows():
-    if row['Species'] == 'domestic animals - goat/sheep':
-        df.at[index, 'KS'] = 3
+
     if row['Species'] == 'quail':
         df.at[index, 'KS'] = 3
-    if row['Species'] == 'horse/donkey':
-        df.at[index, 'KS'] = 3
-    if row['Species'] == 'bird - domestic':
+    if row['Species'] == 'turkey':
         df.at[index, 'KS'] = 3
     if row['Species'] == 'cattle':
         df.at[index, 'KS'] = 3
@@ -78,10 +86,6 @@ for index, row in df.iterrows():
     if row['Species'] == 'pigeon':
         df.at[index, 'KS'] = 3
     if row['Species'] == 'duck':
-        df.at[index, 'KS'] = 3
-    if row['Species'] == 'turkey':
-        df.at[index, 'KS'] = 3
-    if row['Species'] == 'bird - wild':
         df.at[index, 'KS'] = 3
 
 for index, row in df.iterrows():
