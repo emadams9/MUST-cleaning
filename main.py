@@ -13,12 +13,11 @@ def toxicology_csv_to_list(some_csv):
 
 df = toxicology_csv_to_list('/home/emily/CodeLyfe/Research/MUST_original_and_perl/batch_NLM.csv')
 
-# Regroup acute toxicity measurements
-
-df['Measure'] = df['Measure'].replace(['LC50', 'LCt50'], 'LD50')
-df['Measure'] = df['Measure'].replace(['TDLo', 'LCLo'], 'LDLo')
-df['Measure'] = df['Measure'].replace(['LC90'], 'LD90')
-df['Measure'] = df['Measure'].replace(['LC30'], 'LD30')
+# Uncomment to regroup measurement type if need be.
+# df['Measure'] = df['Measure'].replace(['LC50', 'LCt50'], 'LD50')
+# df['Measure'] = df['Measure'].replace(['TDLo', 'LCLo'], 'LDLo')
+# df['Measure'] = df['Measure'].replace(['LC90'], 'LD90')
+# df['Measure'] = df['Measure'].replace(['LC30'], 'LD30')
 
 # If units in mg/m3 or mL/kg, convert to mg/kg by dividing or multiplying corresponding value in column 'Value' by 1000.
 # Convert all other viable units to mg/kg with conversion factor of 1.
