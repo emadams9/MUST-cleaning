@@ -1,7 +1,7 @@
 # Written by Emily Adams, Summer 2021, Kostal Research Group at The George Washington University
 # Data plotting tool for MUST
 
-import matplotlib as mpl
+
 import pandas as pd
 import glob
 import numpy as np
@@ -19,6 +19,10 @@ files = glob.glob('cleaned_csv_output/*.csv')
 # Add to csv with histogram and export
 
 def gen_stats_and_histo_plot(must_data_csvs):
+    png = glob.glob('cleaned_csv_output/*.png')
+    for p in png:
+        os.remove(p)
+
     for f in must_data_csvs:
         tox_df = pd.read_csv(f, names=['CAS', 'Species', 'Measure', 'Value', 'Unit', 'RS', 'Source'])
         min_val = tox_df['Value'].min()
@@ -45,7 +49,7 @@ def gen_stats_and_histo_plot(must_data_csvs):
         axs[1].set_ylabel('Frequency')
         axs[1].set_xlabel('Threshold Values')
         axs[1].set_title('Plot for File: ' + str(f))
-        fig.savefig('cleaned_csv_output/{}_plot_and_stats.png'.format(tox_df['CAS'][0]))
+        fig.savefig('plots_and_stats_output/{}_{}_plot_and_stats.png'.format(tox_df['CAS'][0], tox_df['Measure'][0]))
         plot.close(fig)
 
     # Functions for calculating 95% CI using the mean and geometric mean
