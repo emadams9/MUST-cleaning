@@ -7,8 +7,6 @@ import glob
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plot
-from PIL import Image
-import PIL
 
 
 files = glob.glob('cleaned_csv_output/*.csv')
@@ -28,34 +26,29 @@ def gen_stats_and_histo_plot(must_data_csvs):
         mean = tox_df['Value'].mean()
         median = tox_df['Value'].median()
         std = tox_df['Value'].std()
-        gmean = stats.gmean(tox_df['Value'])
+        g_mean = stats.gmean(tox_df['Value'])
         mci = mean_confidence_interval(tox_df['Value'], confidence=0.95)
-        gmci = gmean_confidence_interval(tox_df['Value'], confidence=0.95)
+        g_mci = gmean_confidence_interval(tox_df['Value'], confidence=0.95)
 
         x = np.array(tox_df['Value'])
 
-        table_ax = plot.subplot(121)
-        table_ax.text(1, 1, 'foo')
-        plot_ax = plot.subplot(122)
+        fig, axs = plot.subplots(1, 2, figsize=(15, 6), tight_layout=True)
+        axs[0].axis('tight')
+        axs[0].axis('off')
+        cell_text = [[min_val], [max_val], [mean], [median], [std], [g_mean], [mci], [g_mci]]
+        row_labels = ('Minimum Value', 'Maximum Value', 'Mean', 'Median', 'Standard Deviation', 'Geometric Mean',
+                      '95% Confidence Interval (M, –EBM, +EBM)', '95% Confidence Interval (GM, –EBGM, +EBGM)')
+        axs[0].table(cellText=cell_text, rowLabels=row_labels, colLabels=None, colWidths=[1, 1], loc='center',
+                     fontsize=25)
+        axs[1].hist(x, bins=5)
+        axs[1].axis([0, x.max() + 1, 0, len(x)])
+        axs[1].set_ylabel('Frequency')
+        axs[1].set_xlabel('Threshold Values')
+        axs[1].set_title('Plot for File: ' + str(f))
+        fig.savefig('cleaned_csv_output/{}_plot_and_stats.png'.format(tox_df['CAS'][0]))
+        plot.close(fig)
 
-        plot_ax.hist(x, density=False, bins=5)
-        # plot_ax.axis([0, x.max() + 1, 0, len(x)])
-        # plot_ax.ylabel('Frequency')
-        # plot_ax.xlabel('Threshold Values')
-        # plot_ax.title('Plot for File: ' + str(f))
-
-        plot.show()
-        print('Minimum = ' + str(min_val))
-        print('Maximum = ' + str(max_val))
-        print('Mean = ' + str(mean))
-        print('Median = ' + str(median))
-        print('Standard Deviation = ' + str(std))
-        print('Geometric Mean = ' + str(gmean))
-        print('95% Confidence Interval (M, –EBM, +EBM) = ' + str(mci))
-        print('95% Confidence Interval (GM, –EBGM, +EBGM) = ' + str(gmci))
-        break
-
-# Functions for calculating 95% CI using the mean and geometric mean
+    # Functions for calculating 95% CI using the mean and geometric mean
 
 def mean_confidence_interval(data, confidence=0.95):
     a = 1.0 * np.array(data)
