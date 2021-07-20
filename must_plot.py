@@ -24,15 +24,16 @@ def gen_stats_and_histo_plot(must_data_csvs):
         os.remove(p)
 
     for f in must_data_csvs:
+        decimal_places = 3
         tox_df = pd.read_csv(f, names=['CAS', 'Species', 'Measure', 'Value', 'Unit', 'RS', 'Source'])
-        min_val = tox_df['Value'].min()
-        max_val = tox_df['Value'].max()
-        mean = tox_df['Value'].mean()
-        median = tox_df['Value'].median()
-        std = tox_df['Value'].std()
-        g_mean = stats.gmean(tox_df['Value'])
-        mci = mean_confidence_interval(tox_df['Value'], confidence=0.95)
-        g_mci = gmean_confidence_interval(tox_df['Value'], confidence=0.95)
+        min_val = tox_df['Value'].min().round(decimal_places)
+        max_val = tox_df['Value'].max().round(decimal_places)
+        mean = tox_df['Value'].mean().round(decimal_places)
+        median = tox_df['Value'].median().round(decimal_places)
+        std = tox_df['Value'].std().round(decimal_places)
+        g_mean = stats.gmean(tox_df['Value']).round(decimal_places)
+        mci = [val.round(decimal_places) for val in mean_confidence_interval(tox_df['Value'], confidence=0.95)]
+        g_mci = [val.round(decimal_places) for val in mean_confidence_interval(tox_df['Value'], confidence=0.95)]
 
         x = np.array(tox_df['Value'])
 
