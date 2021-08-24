@@ -3,6 +3,7 @@
 
 
 import pandas as pd
+import os
 import glob
 import numpy as np
 from scipy import stats
@@ -19,13 +20,14 @@ files = glob.glob('cleaned_csv_output/*.csv')
 # Calculations and histograms are then saved to same png file
 
 def gen_stats_and_histo_plot(must_data_csvs):
-    png = glob.glob('cleaned_csv_output/*.png')
+    png = glob.glob('plots_and_stats_output/*.png')
     for p in png:
         os.remove(p)
 
     for f in must_data_csvs:
         decimal_places = 3
-        tox_df = pd.read_csv(f, names=['CAS', 'Species', 'Measure', 'Value', 'Unit', 'RS', 'Source'])
+        tox_df = pd.read_csv(f, names=['Name', 'CAS', 'Species', 'Measure', 'Route', 'Value', 'Unit', 'KS', 'RS', 'Rf', 'RLf',
+                                       'Source', 'Year'])
         min_val = tox_df['Value'].min().round(decimal_places)
         max_val = tox_df['Value'].max().round(decimal_places)
         mean = tox_df['Value'].mean().round(decimal_places)
@@ -55,7 +57,8 @@ def gen_stats_and_histo_plot(must_data_csvs):
         axs[1].set_ylabel('Frequency')
         axs[1].set_xlabel('Category of Concern ' + ' (' + tox_df['Unit'][0] + ')')
         axs[1].set_title('Plot for File: ' + str(f))
-        fig.savefig('plots_and_stats_output/{}_{}_plot_and_stats.png'.format(tox_df['CAS'][0], tox_df['Measure'][0]))
+        fig.savefig('plots_and_stats_output/{}_{}_plot_and_stats.png'.format(tox_df['Name'][0], tox_df['Measure'][0],
+                                                                             tox_df['Route'][0]))
         plot.close(fig)
 
     # Functions for calculating 95% CI using the mean and geometric mean
