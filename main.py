@@ -1,10 +1,10 @@
 # Written by Emily Adams, Summer 2021, Kostal Research Group at The George Washington University
-# Data cleaning tool to prepare toxicological data for MUST
+# Tool for data cleaning, KS/RS/Rf/RLf assignment to prepare toxicological data for MUST
 
 import pandas as pd
 import os
 import glob
-
+from must_plot import*
 
 def toxicology_csv_to_df(some_csv):
     tox_data = pd.read_csv(some_csv, header=0, names=['Name', 'CAS', 'Species', 'Measure', 'Route', 'Value', 'Unit',
@@ -179,3 +179,5 @@ for group in groups:
     if df.shape[0] >= 10:
         df.to_csv('cleaned_csv_output/{}_{}_{}_{}.csv'.format(vals[0], vals[1], vals[2], df.shape[0]),
                   header=False, index=False)
+
+gen_stats_and_histo_plot(files)

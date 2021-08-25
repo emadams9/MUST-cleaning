@@ -57,8 +57,8 @@ def gen_stats_and_histo_plot(must_data_csvs):
         axs[1].set_ylabel('Frequency')
         axs[1].set_xlabel('Category of Concern ' + ' (' + tox_df['Unit'][0] + ')')
         axs[1].set_title('Plot for File: ' + str(f))
-        fig.savefig('plots_and_stats_output/{}_{}_plot_and_stats.png'.format(tox_df['Name'][0], tox_df['Measure'][0],
-                                                                             tox_df['Route'][0]))
+        fig.savefig('plots_and_stats_output/{}_{}_{}_plots_and_stats.png'.format(tox_df['Name'][0], tox_df['Measure'][0],
+                                                                                tox_df['Route'][0]))
         plot.close(fig)
 
     # Functions for calculating 95% CI using the mean and geometric mean
@@ -77,4 +77,4 @@ def gmean_confidence_interval(data, confidence=0.95):
     h = se * stats.t.ppf((1 + confidence) / 2., n-1)
     return m, m-h, m+h
 
-gen_stats_and_histo_plot(files)
+
